@@ -18,11 +18,17 @@ A light-weight TDD / BDD framework for Objective-C & Cocoa.
 Use [CocoaPods](http://github.com/CocoaPods/CocoaPods)
 
 ```ruby
-dependency 'Specta',      '~> 0.1.9'
-# dependency 'Expecta',     '~> 0.2.1'   # expecta matchers
-# dependency 'OCHamcrest',  '~> 1.7'     # hamcrest matchers
-# dependency 'OCMock',      '~> 2.0.1'   # OCMock
-# dependency 'LRMocky',     '~> 0.9.1'   # LRMocky
+target :MyApp do
+  # your app dependencies
+end
+
+target :MyAppTests do
+  pod 'Specta',      '~> 0.1.11'
+  # pod 'Expecta',     '~> 0.2.1'   # expecta matchers
+  # pod 'OCHamcrest',  '~> 1.7'     # hamcrest matchers
+  # pod 'OCMock',      '~> 2.0.1'   # OCMock
+  # pod 'LRMocky',     '~> 0.9.1'   # LRMocky
+end
 ```
 
 or
@@ -33,7 +39,8 @@ or
 4. Copy and add all header files in `products` folder to the Test target in your Xcode project.
 5. For **OS X projects**, copy and add `libSpecta-macosx.a` in `products` folder to the Test target in your Xcode project.  
    For **iOS projects**, copy and add `libSpecta-ios-universal.a` in `products` folder to the Test target in your Xcode project.
-6. Add the following to your test code.
+6. Add `-ObjC` and `-all_load` to the "Other Linker Flags" build setting for the Spec/Test target in your Xcode project.
+7. Add the following to your test code.
 
 ```objective-c
 #import "Specta.h"
@@ -82,6 +89,7 @@ describe(@"Thing", ^{
     // Async example blocks need to invoke done() callback.
     done();
   });
+  // You'll have to build your project with Clang (Apple LLVM Compiler) in order to use this feature.
 
   itShouldBehaveLike(@"a shared behavior", [NSDictionary dictionaryWithObjectsAndKeys:@"obj", @"key", nil]);
 
@@ -143,12 +151,15 @@ Check out Facebook's [xctool](https://github.com/facebook/xctool).
 
 ### CONTRIBUTORS
 
+* Christian Niles [(nerdyc)](https://github.com/nerdyc)
 * Dan Palmer [(danpalmer)](https://github.com/danpalmer)
 * Justin Spahr-Summers [(jspahrsummers)](https://github.com/jspahrsummers)
 * Josh Abernathy [(joshaber)](https://github.com/joshaber)
 * Meiwin Fu [(meiwin)](https://github.com/meiwin)
+* Robert Gilliam [(rhgills)](https://github.com/rhgills)
 * Shawn Morel [(strangemonad)](https://github.com/strangemonad)
-* Christian Niles [(nerdyc)](https://github.com/nerdyc)
+* Tom Brow [(brow)](https://github.com/brow)
+* Tony Arnold [(tonyarnold)](https://github.com/tonyarnold)
 
 ## LICENSE
 

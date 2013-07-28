@@ -1,3 +1,18 @@
+v0.1.11
+=======
+
+* Disable Async Testing when Specta is not compiled with Clang.
+* Fixed failWithException: not passing thru to current test case. [rhgills]
+* Fixed unused data dictionary crashing shared examples. [rhgills]
+* Removed Warnings under LLVM GCC.
+* Fixed release build not compiling due to implicitly synthesized properties. [kastiglione]
+
+v0.1.10
+=======
+
+* Fixed Accessibility Inspector causing crash[wonga00]
+* Fail when non-existent shared example is called[brow]
+
 v0.1.9
 ======
 
