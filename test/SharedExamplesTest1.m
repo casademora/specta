@@ -7,48 +7,48 @@ SpecBegin(_SharedExamplesTest1)
 sharedExamplesFor(@"shared1", ^(NSDictionary *data) {
   describe(@"foo", ^{
     it(@"equals string 'Foo'", ^{
-      expect([data objectForKey:@"foo"]).toEqual(@"Foo");
+      SPTAssertEqualObjects(data[@"foo"], @"Foo");
     });
   });
 
   describe(@"bar", ^{
     it(@"equals string 'Bar'", ^{
-      expect([data objectForKey:@"bar"]).toEqual(@"Bar");
+      SPTAssertEqualObjects(data[@"bar"], @"Bar");
     });
   });
 });
 
 sharedExamples(@"shared2", ^(NSDictionary *data) {
   it(@"inserts data.baz to items", ^{
-    [items addObject:[data objectForKey:@"baz"]];
+    [items addObject:data[@"baz"]];
   });
 });
 
 describe(@"group", ^{
   itShouldBehaveLike(@"shared1",
-                     [NSDictionary dictionaryWithObjectsAndKeys:@"Foo", @"foo",
-                                                                @"Bar", @"bar", nil]);
+                     @{@"foo" : @"Foo",
+                       @"bar" : @"Bar"});
 });
 
-itBehavesLike(@"shared2", [NSDictionary dictionaryWithObject:@"hello" forKey:@"baz"]);
+itBehavesLike(@"shared2", @{@"baz": @"hello"});
 
 context(@"group2", ^{
-  itBehavesLike(@"shared2", [NSDictionary dictionaryWithObject:@"world" forKey:@"baz"]);
+  itBehavesLike(@"shared2", @{@"baz": @"world"});
 });
 
 SpecEnd
 
-@interface SharedExamplesTest1 : SenTestCase; @end
+@interface SharedExamplesTest1 : XCTestCase; @end
 @implementation SharedExamplesTest1
 
 - (void)testSharedExamples {
   items = [[NSMutableArray alloc] init];
-  SenTestSuiteRun *result = RunSpec(_SharedExamplesTest1Spec);
-  expect([result testCaseCount]).toEqual(4);
-  expect([result failureCount]).toEqual(0);
-  expect([result hasSucceeded]).toEqual(YES);
-  expect(items).toEqual(([NSArray arrayWithObjects:@"hello", @"world", nil]));
-  [items release];
+  XCTestSuiteRun *result = RunSpec(_SharedExamplesTest1Spec);
+  SPTAssertEqual([result testCaseCount], 4);
+  SPTAssertEqual([result unexpectedExceptionCount], 0);
+  SPTAssertEqual([result failureCount], 0);
+  SPTAssertTrue([result hasSucceeded]);
+  SPTAssertEqualObjects(items, (@[@"hello", @"world"]));
   items = nil;
 }
 
